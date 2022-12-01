@@ -4,11 +4,11 @@ const express = require("express");
 const app = express();
 
 app.get("/", (req, res) => {
-  res.send("Hello SQL Server");
+  res.json({ message: "Hello SQL Server" });
 });
 
 app.get("/api", (req, res) => {
-  res.send("API SQL Server");
+  res.json({ message: "API SQL Server" });
 });
 
 const port = process.env.PORT || 5000;
