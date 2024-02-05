@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
+const path = require("path");
 
 const app = express();
 
@@ -13,6 +14,7 @@ if (process.env.NODE_ENV !== "production") {
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static(path.resolve(__dirname, "public")));
 
 app.get("/", (req, res) => {
   res.json({ message: "Hello from backend and Supabase !!!" });
