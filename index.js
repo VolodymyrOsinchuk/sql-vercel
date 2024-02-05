@@ -49,7 +49,7 @@ app.post("/api/v1/users", async (req, res) => {
 });
 
 app.get("/api/v1", (req, res) => {
-  res.json({ message: "API SQL Server" });
+  res.json({ message: "API SQL Server Supabase" });
 });
 
 const port = process.env.PORT || 5000;
