@@ -14,6 +14,10 @@ if (process.env.NODE_ENV !== "production") {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.json({ message: "Hello from backend and Supabase !!!" });
+});
+
 app.get("/api/v1/users", async (req, res) => {
   const { data, error } = await supabase.from("users").select();
 
