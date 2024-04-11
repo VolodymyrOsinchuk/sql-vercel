@@ -7,7 +7,7 @@ const app = express();
 
 // import data base
 // const supabase = require("./db");
-const sequelize = require("./db");
+// const sequelize = require("./db");
 
 // const authRoutes = require("./routes/auth");
 // const userRoutes = require("./routes/user");
@@ -20,16 +20,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, "public")));
 
-app.get("/", (req, res) => {
-  res.json({ message: "Hello from backend and Supabase !!!" });
-});
+// app.get("/", (req, res) => {
+//   res.json({ message: "Hello from backend and Supabase !!!" });
+// });
 
 // app.use("/api/v1/auth", authRoutes);
 // app.use("/api/v1/users", userRoutes);
 
-app.get("/api/v1", (req, res) => {
-  res.json({ message: "API SQL Server Supabase" });
-});
+// app.get("/api/v1", (req, res) => {
+//   res.json({ message: "API SQL Server Supabase" });
+// });
 
 const port = process.env.PORT || 5000;
 
