@@ -9,7 +9,7 @@ const app = express();
 // const supabase = require("./db");
 // const sequelize = require("./db");
 
-// const authRoutes = require("./routes/auth");
+const authRoutes = require("./routes/auth");
 // const userRoutes = require("./routes/user");
 
 if (process.env.NODE_ENV !== "production") {
@@ -19,7 +19,7 @@ if (process.env.NODE_ENV !== "production") {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, "public")));
-// app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/auth", authRoutes);
 // app.use("/api/v1/users", userRoutes);
 
 app.get("/", (req, res) => {
