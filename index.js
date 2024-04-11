@@ -10,7 +10,7 @@ const app = express();
 // const sequelize = require("./db");
 
 const authRoutes = require("./routes/auth");
-const userRoutes = require("./routes/user");
+// const userRoutes = require("./routes/user");
 
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, "public")));
 app.use("/api/v1/auth", authRoutes);
-app.use("/api/v1/users", userRoutes);
+// app.use("/api/v1/users", userRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Hello from backend and Supabase !!!" });
