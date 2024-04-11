@@ -10,12 +10,8 @@ require("dotenv").config();
 // module.exports = supabase;
 const { Sequelize } = require("sequelize");
 
-const sequelize = new Sequelize(process.env.POSTGRES_URL);
-
-// const { Pool } = pg;
-
-// const pool = new Pool({
-//   connectionString: process.env.POSTGRES_URL,
-// });
+const sequelize = new Sequelize(process.env.POSTGRES_URL, {
+  logging: false,
+});
 
 module.exports = sequelize;
