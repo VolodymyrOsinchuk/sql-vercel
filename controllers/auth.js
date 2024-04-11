@@ -1,7 +1,5 @@
 const User = require("../models/user");
 
-User.sync();
-
 exports.register = async (req, res) => {
   try {
     const newUser = await User.create(req.body);
@@ -14,6 +12,7 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
+    res.status(200).json({ msg: "login successful" });
   } catch (error) {
     console.log("🚀 ~ exports.login= ~ error:", error);
   }
