@@ -7,7 +7,7 @@ const app = express();
 
 // import data base
 // const supabase = require("./db");
-// const sequelize = require("./db");
+const sequelize = require("./db");
 
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
@@ -36,12 +36,13 @@ app.listen(port, () => {
   console.log("Server listening on port " + port);
 });
 
-// sequelize
-//   // .sync()
-//   .sync({ force: true })
-//   .then((result) =>
-//     console.log("DB is connected with host: ", result.options.host)
-//   )
-//   .catch((err) => {
-//     console.warn("Error syncing", err);
-//   });
+sequelize
+  .authenticate()
+  // .sync({ force: true })
+  .then(() =>
+    // console.log("DB is connected with host: ", result.options.host)
+    console.log("DB is connected")
+  )
+  .catch((err) => {
+    console.warn("Error syncing", err);
+  });
