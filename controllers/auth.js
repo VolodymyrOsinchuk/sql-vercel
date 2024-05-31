@@ -2,32 +2,30 @@ const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
 
-// const signToken = (id) => {
-//   return jwt.sign({ id }, process.env.JWT_SECRET, {
-//     expiresIn: process.env.JWT_EXPIRES_IN,
-//   });
-// };
+const signToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  });
+};
 
-// const createSendToken = (user, res) => {
-//   console.log("🚀 ~ createSendToken ~ res:", res);
+const createSendToken = (user, res) => {
+  const token = signToken(user._id);
+  console.log("🚀 ~ createSendToken ~ token :", token);
 
-//   const token = signToken(user._id);
-//   console.log("🚀 ~ createSendToken ~ token :", token);
+  const cookieOptions = {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+    ),
+    httpOnly: true,
+  };
 
-//   const cookieOptions = {
-//     expires: new Date(
-//       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-//     ),
-//     httpOnly: true,
-//   };
+  if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
 
-//   if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
+  res.cookie("jwt", token, cookieOptions);
 
-//   res.cookie("jwt", token, cookieOptions);
-
-//   user.password = undefined;
-//   res.status(200).json({ token, user });
-// };
+  user.password = undefined;
+  res.status(200).json({ token, user });
+};
 
 exports.register = async (req, res) => {
   const { name, email, password } = req.body;
@@ -72,7 +70,7 @@ exports.login = async (req, res) => {
         .json({ message: "Email or password is incorrect" });
     }
     // 3) if everything is OK, send token to client
-    // createSendToken(user, res);
+    createSendToken(user, res);
 
     // res.status(200).json({ msg: "login successful" });
   } catch (error) {
