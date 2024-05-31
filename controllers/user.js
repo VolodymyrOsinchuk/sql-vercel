@@ -11,10 +11,11 @@ exports.getAllUsers = async (req, res) => {
 };
 
 exports.getUser = async (req, res) => {
-  console.log(req.params);
+  // console.log("req.user ", req.user);
+  // console.log("res.locals ", res.locals);
   try {
     const user = await User.findOne({ where: { id: req.params.id } });
-    console.log("🚀 ~ exports.getUser= ~ user:", user);
+    // console.log("🚀 ~ exports.getUser= ~ user:", user);
     user.password = undefined;
     res.status(200).json(user);
   } catch (error) {

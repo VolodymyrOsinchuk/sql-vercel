@@ -8,7 +8,7 @@ https://github.com/VolodymyrOsinchuk/sql-vercel.git
 
 echo "# sql-netlify" >> README.md
 git init
-git add README.md
+git add .
 git commit -m "first commit"
 git branch -M main
 git remote add origin https://github.com/VolodymyrOsinchuk/sql-vercel.git

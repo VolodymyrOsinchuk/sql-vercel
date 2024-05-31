@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
@@ -15,10 +16,12 @@ const userRoutes = require("./routes/user");
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
 }
-
+// console.log("process.env.NODE_ENV", process.env.NODE_ENV);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname, "public")));
+
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes);
 

@@ -3,14 +3,18 @@ const bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
 
 const signToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
-  });
+  return jwt.sign(
+    { id },
+    process.env.JWT_SECRET,
+    // { algorithm: "RS256" },
+    {
+      expiresIn: process.env.JWT_EXPIRES_IN,
+    }
+  );
 };
 
 const createSendToken = (user, res) => {
-  const token = signToken(user._id);
-  console.log("🚀 ~ createSendToken ~ token :", token);
+  const token = signToken(user.id);
 
   const cookieOptions = {
     expires: new Date(
@@ -24,7 +28,7 @@ const createSendToken = (user, res) => {
   res.cookie("jwt", token, cookieOptions);
 
   user.password = undefined;
-  res.status(200).json({ token, user });
+  res.status(200).json({ token });
 };
 
 exports.register = async (req, res) => {
@@ -62,7 +66,7 @@ exports.login = async (req, res) => {
 
     // 2) Check if user exists && password is correct
     const user = await User.findOne({ where: { email: email } });
-    console.log("🚀 ~ exports.login= ~ user:", user);
+    // console.log("🚀 ~ exports.login= ~ user:", user);
 
     if (!user || (await !bcrypt.compareSync(password, user.password))) {
       return res
@@ -76,4 +80,40 @@ exports.login = async (req, res) => {
   } catch (error) {
     console.log("🚀 ~ exports.login= ~ error:", error);
   }
+};
+
+exports.logout = (req, res) => {
+  res.clearCookie("jwt", {
+    httpOnly: true,
+    secure: true,
+    expires: new Date(Date.now() + 10 * 1000),
+  });
+
+  res.status(200).json({ message: "success logout" });
+};
+
+exports.protect = async (req, res, next) => {
+  // console.log("req.headers", req.headers);
+  // console.log("req.cookies", req.cookies.jwt);
+  let token;
+  if (req.cookies.jwt) {
+    token = req.cookies.jwt;
+  }
+
+  if (!token) {
+    return next(new Error("You ate not logged in! Please try again"));
+  }
+
+  const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+  console.log("🚀 ~ exports.protect= ~ decoded:", decoded);
+
+  const currentUser = await User.findByPk(decoded.id);
+  console.log("🚀 ~ exports.protect= ~ currentUser:", currentUser);
+
+  if (!currentUser) {
+    return new Error("The user belonging to this token does not longer exist");
+  }
+  req.user = currentUser;
+  res.locals.user = currentUser;
+  next();
 };
