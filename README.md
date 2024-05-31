@@ -19,3 +19,7 @@ git push -u origin main
 git remote add origin https://github.com/VolodymyrOsinchuk/sql-vercel.git
 git branch -M main
 git push -u origin main
+
+### lien
+
+https://vercel-node-ro5xdvsdd-volodymyrosinchuks-projects.vercel.app
