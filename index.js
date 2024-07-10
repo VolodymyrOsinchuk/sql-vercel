@@ -40,7 +40,7 @@ app.listen(port, () => {
 });
 
 sequelize
-  .authenticate()
+  .sync()
   // .sync({ force: true })
   .then(() =>
     // console.log("DB is connected with host: ", result.options.host)
