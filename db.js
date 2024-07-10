@@ -4,13 +4,11 @@ require("dotenv").config();
 
 const { Sequelize } = require("sequelize");
 
-const sequelize = new Sequelize("verceldb", "default", "L94ptzbACwuB", {
-  host: "ep-calm-snow-a2kwy1no-pooler.eu-central-1.aws.neon.tech",
+const sequelize = new Sequelize(process.env.POSTGRES_URL, {
+  // host: "ep-calm-snow-a2kwy1no-pooler.eu-central-1.aws.neon.tech",
+  // operatorsAliases: false,
   dialect: "postgres",
-  dialectOptions: {
-    ssl: true,
-    native: true,
-  },
+  dialectModule: require("pg"),
   logging: false,
   pool: {
     max: 5,
