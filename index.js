@@ -29,6 +29,11 @@ app.get("/", (req, res) => {
   res.json({ message: "Hello from backend and Supabase !!!" });
 });
 
+app.get("/favicon.ico", function (req, res) {
+  res.status(204);
+  res.end();
+});
+
 app.get("/api/v1", (req, res) => {
   res.json({ message: "API SQL Server Sequelize" });
 });
