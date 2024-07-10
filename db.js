@@ -1,20 +1,30 @@
 require("dotenv").config();
+// const pg = require("pg");
+// const { Pool } = pg;
 
 const { Sequelize } = require("sequelize");
 
 const sequelize = new Sequelize(process.env.POSTGRES_URL, {
+  host: "ep-calm-snow-a2kwy1no-pooler.eu-central-1.aws.neon.tech",
   dialect: "postgres",
-  protocol: "postgres",
+  operatorsAliases: false,
   logging: false,
+  pool: {
+    max: 3,
+    min: 0,
+    acquire: 3000,
+    idle: 10000,
+  },
 });
 
-// async () => {
-//   try {
-//     await sequelize.sync();
-//     console.log("Connection has been established successfully");
-//   } catch (error) {
-//     console.error("Unable to authenticate to the database", error);
-//   }
-// };
+// const pool = new Pool({
+//   connectionString: process.env.POSTGRES_URL,
+// });
+
+// pool.connect((err) => {
+//   if (err) throw err;
+//   console.log("Connection to postgres succeeded");
+// });
 
 module.exports = sequelize;
+// module.exports = pool;

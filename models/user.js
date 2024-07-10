@@ -6,22 +6,22 @@ const User = sequelize.define(
   "User",
   {
     id: {
-      primaryKey: true,
       type: DataTypes.INTEGER,
+      primaryKey: true,
       autoIncrement: true,
       allowNull: false,
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
   },
   { timestamps: true }
