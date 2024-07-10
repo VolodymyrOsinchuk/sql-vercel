@@ -45,13 +45,13 @@ app.listen(port, () => {
   console.log("Server listening on port " + port);
 });
 
-sequelize
-  .authenticate()
-  // .sync({ force: true })
-  .then(() =>
-    // console.log("DB is connected with host: ", result.options.host)
-    console.log("DB is connected")
-  )
-  .catch((err) => {
-    console.warn("Error syncing", err);
-  });
+// sequelize
+//   .authenticate()
+//   // .sync({ force: true })
+//   .then(() =>
+//     // console.log("DB is connected with host: ", result.options.host)
+//     console.log("DB is connected")
+//   )
+//   .catch((err) => {
+//     console.warn("Error syncing", err);
+//   });
