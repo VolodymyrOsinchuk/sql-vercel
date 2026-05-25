@@ -9,7 +9,7 @@ const signToken = (id) => {
     // { algorithm: "RS256" },
     {
       expiresIn: process.env.JWT_EXPIRES_IN,
-    }
+    },
   );
 };
 
@@ -18,7 +18,7 @@ const createSendToken = (user, res) => {
 
   const cookieOptions = {
     expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
     ),
     httpOnly: true,
   };
@@ -33,7 +33,11 @@ const createSendToken = (user, res) => {
 
 exports.register = async (req, res) => {
   const { name, email, password } = req.body;
-  if (email) {
+
+  const user = await User.findOne({ where: { email: email } });
+  console.log("🚀 ~  user:", user);
+
+  if (user.email === email) {
     return res
       .status(400)
       .json({ message: `User with email '${email}' already exist` });
